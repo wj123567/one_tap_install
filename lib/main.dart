@@ -54,31 +54,44 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: Center(
-        child: Card(
-          color: Colors.grey[900],
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          elevation: 8,
-          margin: const EdgeInsets.symmetric(horizontal: 24),
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.system_update_alt_rounded, size: 64, color: Colors.red),
-                const SizedBox(height: 12),
-                const Text(
-                  "Tap below to install the latest version.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white70),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Card(
+                color: Colors.grey[900],
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                elevation: 8,
+                margin: const EdgeInsets.symmetric(horizontal: 24),
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.system_update_alt_rounded, size: 64, color: Colors.red),
+                      const SizedBox(height: 12),
+                      const Text(
+                        "Tap below to install the latest YouTube version.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                      const SizedBox(height: 24),
+                      ElevatedButton.icon(
+                        onPressed: () => installer.updateApp(context, true),
+                        icon: const Icon(Icons.download_rounded),
+                        label: const Text("Update Now"),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                  onPressed: () => installer.updateApp(context),
-                  icon: const Icon(Icons.download_rounded),
-                  label: const Text("Update Now"),
-                ),
-              ],
-            ),
+              ),
+              ElevatedButton.icon(
+                onPressed: () => installer.updateApp(context, false),
+                icon: const Icon(Icons.download_rounded),
+                label: const Text("Update Updater"),
+              ),
+            ],
           ),
         ),
       ),

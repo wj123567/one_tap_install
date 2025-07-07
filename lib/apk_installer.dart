@@ -5,12 +5,13 @@ import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ApkInstaller {
-  final String githubApiUrl = 'https://api.github.com/repos/wj123567/one_tap_install/releases/latest';
+  final String appApiUrl = 'https://api.github.com/repos/wj123567/one_tap_install/releases/latest';
+  final String ytApiUrl = 'https://api.github.com/repos/wj123567/update_apk/releases/latest';
 
   /// Step 1: Fetch the latest APK URL from GitHub release
-  Future<String?> getLatestApkUrl() async {
+  Future<String?> getLatestApkUrl(bool isYt) async {
     try {
-      final response = await Dio().get(githubApiUrl);
+      final response = await Dio().get(isYt?ytApiUrl:appApiUrl);
       final assets = response.data['assets'] as List<dynamic>;
 
       final apkAsset = assets.firstWhere(
@@ -65,10 +66,10 @@ class ApkInstaller {
   }
 
   /// One public method to call from UI
-  Future<void> updateApp(BuildContext context) async {
+  Future<void> updateApp(BuildContext context, bool isYt) async {
     loadingOverlay(context);
 
-    final apkUrl = await getLatestApkUrl();
+    final apkUrl = await getLatestApkUrl(isYt);
     if (apkUrl == null) {
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No APK found in latest release.")));
@@ -81,7 +82,6 @@ class ApkInstaller {
 
     if (apkPath != null) {
       await promptInstallApk(apkPath);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Install Successfully")));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to download APK.")));
     }
