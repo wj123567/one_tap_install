@@ -5,7 +5,7 @@ import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ApkInstaller {
-  final String githubApiUrl = 'https://api.github.com/repos/wj123567/TestUpdateApp/releases/latest';
+  final String githubApiUrl = 'https://api.github.com/repos/wj123567/one_tap_install/releases/latest';
 
   /// Step 1: Fetch the latest APK URL from GitHub release
   Future<String?> getLatestApkUrl() async {
